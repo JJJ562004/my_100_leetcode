@@ -375,3 +375,25 @@ def matchPlayersAndTrainers(players, trainers):
 def minChanges(s):
     return sum(i % 2 == int(c) for i, c in enumerate(s))
 
+#860. LemonadeChange
+def lemonadeChange(self, bills: list[int]) -> bool:
+    five, ten = 0, 0  # Counters for $5 and $10 bills
+    
+    for bill in bills:
+        if bill == 5:  
+            five += 1  # Accept $5
+        elif bill == 10:
+            if five == 0:  # Need one $5 to give change
+                return False
+            five -= 1
+            ten += 1  # Accept $10
+        else:  # When bill == 20
+            if ten > 0 and five > 0:  
+                ten -= 1  # Use one $10
+                five -= 1  # Use one $5
+            elif five >= 3:  
+                five -= 3  # Use three $5 bills
+            else:
+                return False  # Cannot give change
+    
+    return True

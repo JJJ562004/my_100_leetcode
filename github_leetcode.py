@@ -395,5 +395,31 @@ def lemonadeChange(self, bills: list[int]) -> bool:
                 five -= 3  # Use three $5 bills
             else:
                 return False  # Cannot give change
-    
     return True
+#1154.Day of the year
+def dayOfYear(self, date: str) -> int:
+        y, m, d = map(int, date.split("-"))
+        days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if (y % 400) == 0 or ((y % 4 == 0) and (y % 100 != 0)): days[1] = 29
+        return d + sum(days[:m-1])
+#1323.Maximum 69 number
+def maximum69Number (self, num: int) -> int:
+        s = list(str(num))
+        if '6' not in s: return num
+        s[s.index('6')] = '9'
+        return int(''.join(s))
+#1518.Water bottles
+def numWaterBottles(self, numBottles: int, numExchange: int) -> int:
+    n = numBottles
+    m = numExchange
+    count = 0
+    while n >= m:
+        n -= m
+        n += 1
+        count += m
+    return count + n
+#7. Reversed Integer
+def reverse(self, x: int) -> int:
+    sign = -1 if x < 0 else 1
+    rev = int(str(abs(x))[::-1]) * sign
+    return rev if -(2**31) <= rev <= (2**31 - 1) else 0

@@ -426,3 +426,80 @@ def reverse(self, x: int) -> int:
 #709. To lower case
 def toLowerCase(self, s: str) -> str:
         return s.lower()
+#1046. Last Stone Weight
+def lastStoneWeight(self, stones: list[int]) -> int:
+        if len(stones) == 0:
+            return 0
+        if len(stones) == 1:
+            return stones[0]
+        stones.sort(reverse=True)
+        if(stones[0] == stones[1]):
+            return self.lastStoneWeight(stones[2:])
+        else:
+            stones.append(abs(stones[0]-stones[1]))
+            return self.lastStoneWeight(stones[2:])
+#412. FizzBuzz
+def fizzBuzz(self, n: int) -> List[str]:
+        result = []
+        for i in range(1,n+1):
+            if i % 5 == 0 and i % 3 == 0:
+                result.append("FizzBuzz")
+            elif i % 3 == 0:
+                result.append("Fizz")
+            elif i % 5 == 0:
+                result.append("Buzz")
+            else:
+                result.append(str(i))
+        return result
+#1507. Reformat Date
+def reformatDate(self, date: str) -> str:
+        month_map = {
+            "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", 
+            "May": "05", "Jun": "06", "Jul": "07", "Aug": "08", 
+            "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
+        }
+        date_str_list = date.split(" ")
+        return(f"{date_str_list[2]}-{month_map[date_str_list[1]]}-{int(date_str_list[0][:-2]):02}")
+#1556. Thousand Separator
+def thousandSeparator(self, n: int) -> str:
+        result = []
+        str_n = str(n)
+        if n >= 1000:
+            for i in range(1, len(str_n)+1):
+                if i % 3 == 0 and i != len(str_n):
+                    result.append(f".{str(str_n[::-1][i-1])}")                    
+                else:
+                    result.append(str(str_n[::-1][i-1]))
+            return(''.join(result[::-1]))
+        else:
+            return(str(n))
+#771. Jewels and Stones
+def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        sum = 0
+        for j in jewels:
+            sum += stones.count(j)
+        return sum
+#20. Valid Parentheses
+def isValid(self, s: str) -> bool:
+        while len(s)>0:
+            l = len(s)
+            s = s.replace('()', '').replace('[]', '').replace('{}', '')
+            if l==len(s): return False
+        return True
+#506.Relative Ranks
+def findRelativeRanks(self, score: List[int]) -> List[str]:
+    sorted_scores = sorted(score, reverse=True)
+    rank_map = {}
+    for i,s in enumerate(sorted_scores):
+        if i == 0:
+            rank_map[s] = "Gold Medal"
+        elif i == 1:
+            rank_map[s] = "Silver Medal"
+        elif i == 2:
+            rank_map[s] = "Bronze Medal"
+        else:
+            rank_map[s] = str(i+1)
+    res = []
+    for i in range(len(score)):
+        res.append(rank_map[score[i]])
+    return res

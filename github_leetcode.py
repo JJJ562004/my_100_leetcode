@@ -487,7 +487,7 @@ def isValid(self, s: str) -> bool:
             if l==len(s): return False
         return True
 #506.Relative Ranks
-def findRelativeRanks(self, score: List[int]) -> List[str]:
+def findRelativeRanks(self, score: list[int]) -> list[str]:
     sorted_scores = sorted(score, reverse=True)
     rank_map = {}
     for i,s in enumerate(sorted_scores):
@@ -503,3 +503,16 @@ def findRelativeRanks(self, score: List[int]) -> List[str]:
     for i in range(len(score)):
         res.append(rank_map[score[i]])
     return res
+#463. Island Perimeter
+def islandPerimeter(self, grid: list[list[int]]) -> int:
+    perimeter = 0
+    rows, cols = len(grid), len(grid[0])
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                perimeter += 4
+                if r > 0 and grid[r-1][c] == 1:
+                    perimeter -= 2
+                if c > 0 and grid[r][c-1] == 1:
+                    perimeter -= 2
+    return perimeter

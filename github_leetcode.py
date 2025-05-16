@@ -582,4 +582,27 @@ class Solution:
         if result == '':
             return 0
         return result[::-1]
-    
+    #34. Find First and Last Position of Element in Sorted Array
+    def searchRange(self, nums: list[int], target: int) -> list[int]:
+        temp = []
+        for index,i in enumerate(nums):
+            if i == target:
+                temp.append(index)
+        if len(temp) == 1:
+            temp.append(temp[0])
+        if not temp:
+            return [-1,-1]
+        return temp[::len(temp)-1]
+    #101. Symmetric Tree
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool: # type: ignore
+        def isSym(a,b):
+            if a is None and b is not None:
+                return False
+            if a is not None and b is None:
+                return False
+            if a is None and b is None:
+                return True
+            if a.val != b.val:
+                return False
+            return isSym(a.left, b.right) and isSym(a.right, b.left)
+        return isSym(root.left, root.right)

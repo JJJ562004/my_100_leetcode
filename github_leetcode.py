@@ -1,3 +1,4 @@
+from typing import Optional
 import pandas as pd
 class Solution:
     # 182. Duplicate Emails (Easy)
@@ -606,3 +607,40 @@ class Solution:
                 return False
             return isSym(a.left, b.right) and isSym(a.right, b.left)
         return isSym(root.left, root.right)
+    #94. Binary Tree Inorder Traversa
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]: # type: ignore
+        ans=[]
+        def inorder(root,ans):
+            if not root:
+                return None
+            inorder(root.left,ans)
+            ans.append(root.val)
+            inorder(root.right,ans)
+        inorder(root,ans)
+        return ans
+    #104. Maximum Depth of Binary Tree
+    def maxDepth(self, root: Optional[TreeNode]) -> int: # type: ignore
+        if not root:
+            return 0
+        l_depth = self.maxDepth(root.left)
+        r_depth = self.maxDepth(root.right)
+        return max(l_depth, r_depth) + 1
+    #125. Valid Palindrome
+    def isPalindrome(self, s: str) -> bool:
+        s_clean = ''.join(c for c in s if c.isalnum()).lower()
+        s_clean_rev = ''.join(c for c in s_clean[::-1])
+        if s_clean == s_clean_rev:
+            return True
+        else:
+            return False
+    #121. Best Time to Buy and Sell Stock
+    def maxProfit(self, prices: list[int]) -> int:
+        if len(prices) == 0:
+            return 0
+        else:
+            profit = 0
+            minBuy = prices[0]
+            for i in range(len(prices)):
+                profit = max(prices[i] - minBuy, profit)
+                minBuy = min(minBuy, prices[i])
+            return profit

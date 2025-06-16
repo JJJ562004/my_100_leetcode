@@ -644,3 +644,57 @@ class Solution:
                 profit = max(prices[i] - minBuy, profit)
                 minBuy = min(minBuy, prices[i])
             return profit
+    #108. Convert Sorted Array to Binary Search Tree
+    def sortedArrayToBST(self, nums: list[int]) -> Optional[TreeNode]: # type: ignore
+        def build(l:int, r:int):
+            if l > r:
+                return None
+            m = (l + r) // 2
+            return TreeNode(nums[m], build(l, m-1), build(m+1, r)) # type: ignore
+        return build(0, len(nums)-1)
+    #111. Minimum Depth of Binary Tree
+    def minDepth(self, root: Optional[TreeNode]) -> int: # type: ignore
+        if not root:
+            return 0
+        l_depth = self.minDepth(root.left)
+        r_depth = self.minDepth(root.right)
+        if l_depth == 0 or r_depth == 0:
+            return l_depth + r_depth + 1
+        return 1 + min(l_depth, r_depth)
+    #112. Path Sum
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool: # type: ignore
+        def check(node, curSum):
+            if not node:
+                return False
+            curSum += node.val
+            if not node.left and not node.right:
+                if curSum == targetSum:
+                    return True
+                else:
+                    return False
+            return check(node.left, curSum) or check(node.right, curSum)
+        return check(root, 0)
+    #113. Path Sum II
+    def hasPathSumII(self, root: Optional[TreeNode], targetSum: int) -> list[list[int]]: # type: ignore
+        result = []
+        temp = []
+        def check(node):
+            if not node:
+                return []
+            temp.append(node.val)
+            if not node.left and not node.right and sum(temp) == targetSum:
+                result.append(temp.copy())
+            else:
+                check(node.left)
+                check(node.right)
+                temp.pop()
+        check(root)
+        return result
+    #120. Triangle
+    def minimumTotal(self, triangle: list[list[int]]) -> int:
+        if not triangle:
+            return 0
+        for i in range(len(triangle) - 2, -1, -1):
+            for j in range(len(triangle[i])):
+                triangle[i][j] += min(triangle[i + 1][j], triangle[i + 1][j + 1])
+        return triangle[0][0]

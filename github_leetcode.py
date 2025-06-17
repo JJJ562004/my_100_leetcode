@@ -698,3 +698,34 @@ class Solution:
             for j in range(len(triangle[i])):
                 triangle[i][j] += min(triangle[i + 1][j], triangle[i + 1][j + 1])
         return triangle[0][0]
+    #141. Linked List Cycle
+    def hasCycle(self, head: Optional[ListNode]) -> bool: # type: ignore
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+    #144. Binary Tree Preorder Traversal
+    def preorderTraversal(self, root: Optional[TreeNode]) -> list[int]: # type: ignore
+        result = []    
+        def check(root, result):
+            if not root:
+                return []
+            result.append(root.val)
+            check(root.left, result)
+            check(root.right, result)
+        check(root, result)
+        return result
+    #145. Binary Tree Postorder Traversal
+    def postorderTraversal(self, root: Optional[TreeNode]) -> list[int]: # type: ignore
+        result = []
+        def check(root, result):
+            if not root:
+                return []
+            check(root.left, result)
+            check(root.right, result)
+            result.append(root.val)
+        check(root, result)
+        return result

@@ -729,3 +729,44 @@ class Solution:
             result.append(root.val)
         check(root, result)
         return result
+    #205. Isomorphic Strings
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        mapping_s_t, mapping_t_s = {}, {}
+        for char_s, char_t in zip(s, t):
+            if char_s not in mapping_s_t:
+                mapping_s_t[char_s] = char_t
+            if char_t not in mapping_t_s:
+                mapping_t_s[char_t] = char_s
+            if mapping_s_t[char_s] != char_t or mapping_t_s[char_t] != char_s:
+                return False
+        return True
+    #219. Contains Duplicate II
+    def containsNearbyDuplicate(self, nums: list[int], k: int) -> bool:
+        index_map = {}
+        for i, num in enumerate(nums):
+            if num in index_map and i - index_map[num] <= k:
+                return True
+            index_map[num] = i
+        return False
+    #225. Implement Stack using Queues
+    class MyStack:
+        def __init__(self):
+            self.queue = []
+
+        def push(self, x: int) -> None:
+            self.queue.append(x)
+
+        def pop(self) -> int:
+            if not self.queue:
+                return None
+            return self.queue.pop()
+
+        def top(self) -> int:
+            if not self.queue:
+                return None
+            return self.queue[-1]
+
+        def empty(self) -> bool:
+            return len(self.queue) == 0

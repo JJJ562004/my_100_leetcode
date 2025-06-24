@@ -798,3 +798,54 @@ class Solution:
                 break
         num *= sign
         return max(min(num, 2**31 - 1), -2**31)
+    #242. Valid Anagram
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        count = {}
+        for char in s:
+            count[char] = count.get(char) + 1
+        for char in t:
+            if char not in count or count[char] == 0:
+                return False
+            count[char] -= 1
+        return True
+    #257. Binary Tree Paths
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> list[str]: # type: ignore
+        def cont_path(root, path):
+            if root:
+                path += str(root.val)
+                if not root.left and not root.right:
+                    paths.append(path)
+                else:
+                    path += "->"
+                    cont_path(root.left, path)
+                    cont_path(root.right, path)
+        paths = []
+        cont_path(root, '')
+        return paths
+    #278.First Bad Version
+    def firstBadVersion(self, n: int) -> int:
+        left, right = 1, n
+        while left < right:
+            mid = (left + right) // 2
+            if isBadVersion(mid): # type: ignore
+                right = mid
+            else:
+                left = mid + 1
+            return left # type: ignore
+    #190.Reverse Bits
+    def reverseBits(self, n: int) -> int:
+        return int(format(n, '032b')[::-1], 2)
+    #11. Container With Most Water
+    def maxArea(self, height: list[int]) -> int:
+        left, right = 0, len(height) - 1
+        max_area = 0
+        while left < right:
+            width = right - left
+            max_area = max(max_area, min(height[left], height[right]) * width)
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+        return max_area

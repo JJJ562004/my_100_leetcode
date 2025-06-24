@@ -770,6 +770,34 @@ class Solution:
 
         def empty(self) -> bool:
             return len(self.queue) == 0
+    #3. Longest Substring Without Repeating Characters
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        char_map = {}
+        left = max_length = 0
+        for right, char in enumerate(s):
+            if char in char_map and char_map[char] >= left:
+                left = char_map[char] + 1
+            char_map[char] = right
+            max_length = max(max_length, right - left + 1)
+        return max_length
+    #8. String to Integer (atoi)
+    def myAtoi(self, s: str) -> int:
+        s = s.strip()
+        if not s:
+            return 0
+        sign = 1
+        if s[0] in ('-', '+'):
+            if s[0] == '-':
+                sign = -1
+            s = s[1:]
+        num = 0
+        for char in s:
+            if char.isdigit():
+                num = num * 10 + int(char)
+            else:
+                break
+        num *= sign
+        return max(min(num, 2**31 - 1), -2**31)
     #242. Valid Anagram
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):

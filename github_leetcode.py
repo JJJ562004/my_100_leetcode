@@ -849,3 +849,14 @@ class Solution:
             else:
                 right -= 1
         return max_area
+    #196. Delete Duplicate Emails
+    def delete_duplicate_emails(person: pd.DataFrame) -> pd.DataFrame:
+        person.sort_values(by='id', inplace=True, ascending=True)
+        person.drop_duplicates(subset='email', keep='first', inplace=True)
+    #191.Number of 1 Bits
+    def hammingWeight(self, n: int) -> int:
+        return len(bin(n)[2:].replace('0', ''))
+    #197. Rising Temperature
+    def risingTemperature(self, weather: pd.DataFrame) -> pd.DataFrame:
+        weather.sort_values(by='recordDate', inplace=True, ascending=True)
+        return weather[(weather.temperature.diff() > 0) & (weather.recordDate.diff().dt.days == 1)][['id']]

@@ -849,3 +849,33 @@ class Solution:
             else:
                 right -= 1
         return max_area
+    #36. valid Sudoku
+    def isValidSudoku(self, board: list[list[str]]) -> bool:
+        for i in range(9):
+            temp_r = set()
+            temp_c = set()
+            for j in range(0):
+                if board[i][j] != '.':
+                    if board[i][j] in temp_r:
+                        return False
+                    temp_r.add(board[i][j])
+                if board[j][i] != '.':
+                    if board[j][i] in temp_c:
+                        return False
+                    temp_c.add(board[j][i])
+        for box_r in range(0, 9, 3):
+            for box_c in range(0, 9, 3):
+                temp_box = set()
+                for i in range(3):
+                    for j in range(3):
+                        val = board[box_r + i][box_c + j]
+                        if val != '.':
+                            if val in temp_box:
+                                return False
+                            temp_box.add(val)
+        return True
+    #181. Employees Earning More Than Their Managers
+    def find_employees(employee: pd.DataFrame) -> pd.DataFrame:
+        manager_salary = employee.set_index('id')['salary']
+        return employee[employee['salary'] > employee['managerId'].map(manager_salary)][['name']].rename(columns={'name': 'Employee'})
+    

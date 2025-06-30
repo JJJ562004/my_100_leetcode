@@ -1,5 +1,7 @@
 from typing import Optional
 import pandas as pd
+import re
+
 class Solution:
     # 182. Duplicate Emails (Easy)
     def duplicate_emails(person: pd.DataFrame) -> pd.DataFrame:
@@ -889,3 +891,28 @@ class Solution:
     def find_employees(employee: pd.DataFrame) -> pd.DataFrame:
         manager_salary = employee.set_index('id')['salary']
         return employee[employee['salary'] > employee['managerId'].map(manager_salary)][['name']].rename(columns={'name': 'Employee'})
+    #10. Regular Expression Matching
+    def isMatch(self, s: str, p: str) -> bool:
+        return re.match(f"^{p}$", s) is not None
+    #195. Tenth Line
+    #Bash: sed -n '10p' file.txt
+    #sed: Stream Editor for filtering and transforming text
+    #-n: Option to print only the specified line number
+    #10p: Command to print the 10th line
+
+    #Python:
+    def tenth_line(file: str) -> str:
+        with open(file, 'r') as f:
+            lines = f.readlines()
+        return lines[9].strip() if len(lines) >= 10 else ""
+    
+    #168. Excel Sheet Column Title
+    def convertToTitle(self, columnNumber: int) -> str:
+        alphabet_dict = {i : chr(i+64) for i in range(1, 27)}
+        result = ""
+        while columnNumber > 0:
+            columnNumber -= 1
+            result = alphabet_dict[columnNumber % 26 + 1] + result
+            print(result)
+            columnNumber //= 26
+        return result

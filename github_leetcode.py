@@ -1,4 +1,5 @@
 from typing import Optional
+from collections import Counter
 import pandas as pd
 import re
 
@@ -896,9 +897,9 @@ class Solution:
         return re.match(f"^{p}$", s) is not None
     #195. Tenth Line
     #Bash: sed -n '10p' file.txt
-    #sed: Stream Editor for filtering and transforming text
-    #-n: Option to print only the specified line number
-    #10p: Command to print the 10th line
+        #sed: Stream Editor for filtering and transforming text
+            #-n: Option to print only the specified line number
+            #10p: Command to print the 10th line
 
     #Python:
     def tenth_line(file: str) -> str:
@@ -915,4 +916,33 @@ class Solution:
             result = alphabet_dict[columnNumber % 26 + 1] + result
             print(result)
             columnNumber //= 26
+        return result
+    #171. Excel Sheet Column Number
+    def titleToNumber(self, columnTitle: str) -> int:
+        result = 0
+        for i, char in enumerate(columnTitle[::-1]):
+            result += (ord(char) - ord('A') + 1) * (26 ** i)
+        return result
+    #193. Valid Phone Numbers
+    #Bash:
+        #egrep "^(\([0-9]{3}\) |[0-9]{3}\-)[0-9]{3}\-[0-9]{4}$" file.txt
+    #Bash-Python:
+        #python3 -c"
+        # import re
+        # with open('file.txt', 'r') as f:
+        #     for line in if:
+        #         if re.match(r'^\d{3} \d{3}-\d{4}$', line):
+        #             print(f"({line[:3]}) {line[4:7]}-{line[8:12]}")
+        # "
+    #349. Intersection of Two Arrays
+    def intersection(nums1: list[int], nums2: list[int]) -> list[int]:
+        return list(set(nums1) & set(nums2)) 
+    #350. Intersection of Two Arrays II
+    def intersect(nums1: list[int], nums2: list[int]) -> list[int]:
+        counts = Counter(nums1)
+        result = []
+        for num in nums2:
+            if counts[num] > 0:
+                result.append(num)
+                counts[num] -= 1
         return result

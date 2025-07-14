@@ -946,3 +946,64 @@ class Solution:
                 result.append(num)
                 counts[num] -= 1
         return result
+    #2540. Minimum Common Value
+    def getCommon(self, nums1: list[int], nums2: list[int]) -> int:
+        if list(set(nums1) & set(nums2)) != []:
+            return min(list(set(nums1) & set(nums2)))
+        else:
+            return -1
+    #345. Reverse Vowels of a String
+    def reverseVowels(self, s: str) -> str:
+        vowel_list = ['a', 'e', 'i', 'o', 'u']
+        temp = [char for char in s[::-1] if char.lower() in vowel_list]
+        s_list = list(s)
+        temp_index = 0
+        for i in range(len(s_list)):
+            if s_list[i].lower() in vowel_list:
+                s_list[i] = temp[temp_index]
+                temp_index += 1
+        return ''.join(s_list)
+    #290. Word Pattern
+    def wordPattern(pattern: str, s: str) -> bool:
+        s_list = s.split(" ")
+        word_to_char = {}
+        char_to_word = {}
+        if len(pattern) != len(s_list):
+            return False
+        for char, word in zip(pattern, s_list):
+            if char in char_to_word:
+                if char_to_word[char] != word:
+                    return False
+            else:
+                if word in word_to_char:
+                    if word_to_char[word] != char:
+                        return False
+            word_to_char[word] = char
+            char_to_word[char] = word
+        return True
+    #292. Nim Game
+    def canWinNim(n: int) -> bool:
+        return n % 4 != 0
+    #374. Guess Number Higher or Lower
+    def guessNumber(self, n: int) -> int:
+        left, right = 1, n
+        while left <= right:
+            mid = (left + right) // 2
+            if guess(mid) == 0:  # type: ignore
+                return mid
+            elif guess(mid) < 0:  # type: ignore
+                right = mid - 1
+            else:
+                left = mid + 1
+        return -1
+    #387. First Unique Character in a String
+    def firstUniqChar(s: str) -> int:
+        temp = {}
+        for i in s:
+            if i not in temp:
+                temp[i] = s.count(i)
+        key_unique = [key for key, value in temp.items() if value == 1]
+        if not key_unique:
+            return -1
+        else:
+            return s.index(s[s.index(key_unique[0])])
